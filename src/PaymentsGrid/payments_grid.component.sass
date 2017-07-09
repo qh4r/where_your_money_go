@@ -1,0 +1,58 @@
+@font-face
+  font-family: "Source Sans Pro"
+  src: url("../fonts/SourceSansPro-Regular.ttf")
+
+$border-color: rgb(204, 207, 209)
+
+@mixin border-mixin($side)
+  border-#{$side}:
+    color: $border-color
+    width: 1px
+    style: solid
+
+.payments-grid-table
+  width: 940px
+  font:
+    size: 14px
+    weight: bold
+  border:
+    radius: 4px
+    color: $border-color
+    width: 1px
+    style: solid
+    collapse: collapse
+  border-collapse: separate !important
+  border-spacing: 0
+  thead
+    color: rgb(102, 102, 102)
+    background-color: rgb(235, 235, 235)
+    font-family: "Helvetica Neue", Helvetica, sans-serif
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6)
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.004)
+  th, td
+    box-sizing: border-box
+    height: 60px
+    text-align: center
+    &:first-child
+      text-align: left
+      padding-left: 30px
+    &.value-column-cell, &.reference-column-cell
+      width: 105px
+    &.rating-column-cell
+      width: 180px
+  tr
+    th
+      @include border-mixin('bottom')
+    td
+      font-family: "Source Sans Pro", sans-serif
+      color: rgb(85, 85, 85)
+      height: 50px
+      @include border-mixin('bottom')
+      @include border-mixin('right')
+      &:last-child
+        border-right: none
+    &:last-child
+      td
+        border-bottom: none
+    &:nth-child(even)
+      background-color: rgb(247, 247, 247)

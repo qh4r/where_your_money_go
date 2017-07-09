@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { Main } from './main.component';
 import { SearchBar } from '../SearchBar';
 import { Header } from '../Header';
+import { PaymentsGrid } from '../PaymentsGrid';
 
 describe('Main component', () => {
   it('should renders without errors', () => {
@@ -28,5 +29,13 @@ describe('Main component', () => {
     const searchBar = appBody.childAt(1);
     expect(searchBar.exists()).toBe(true);
     expect(searchBar.type()).toBe(SearchBar);
+  });
+
+  it('should render payments grid', () => {
+    const main = mount(<Main />);
+    const appBody = main.find('.app-body');
+    const paymentsGrid = appBody.childAt(2);
+    expect(paymentsGrid.exists()).toBe(true);
+    expect(paymentsGrid.type()).toBe(PaymentsGrid);
   });
 });
