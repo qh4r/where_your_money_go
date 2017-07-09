@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import { locationStateSelector } from './AppRouter';
-import { App } from './App';
+import { App } from './app';
 import { store } from './store';
 import registerServiceWorker from './registerServiceWorker';
 

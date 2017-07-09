@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle,no-console */
 import createSagaMiddleware from 'redux-saga';
-import immutable from 'immutable';
+import * as immutable from 'immutable';
 import { all } from 'redux-saga/effects';
 import { routerMiddleware } from 'react-router-redux';
 import { browserHistory } from 'react-router';

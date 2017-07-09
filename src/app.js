@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AppRouter } from './AppRouter';
+import './app.sass';
 
 const App = ({ history }) => (
   <AppRouter history={history} />
