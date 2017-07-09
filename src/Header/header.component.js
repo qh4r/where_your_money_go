@@ -1,8 +1,8 @@
 import React from 'react';
 import './header.component.sass';
 
-const Header = () => (
-  <header id="app-header">
+const HeaderComponent = () => (
+  <header className="app-header">
     <h1 className="big-blue-text">
       Where your money goes
     </h1>
@@ -14,5 +14,5 @@ const Header = () => (
 );
 
 export {
-  Header,
+  HeaderComponent,
 };

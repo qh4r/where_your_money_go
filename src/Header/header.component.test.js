@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import { mount } from 'enzyme';
-import { Header } from './header.component';
+import { HeaderComponent } from './header.component';
 
 describe('Header component', () => {
   it('header text renders without errors', () => {
-    const wrapper = mount(<Header />);
+    const wrapper = mount(<HeaderComponent />);
     const header = wrapper.find('header');
     const h1 = header.childAt(0);
     expect(h1.exists()).toBe(true);
@@ -15,7 +15,7 @@ describe('Header component', () => {
   });
 
   it('subheader text renders without errors', () => {
-    const wrapper = mount(<Header />);
+    const wrapper = mount(<HeaderComponent />);
     const header = wrapper.find('header');
     const h4 = header.childAt(1);
     expect(h4.exists()).toBe(true);
@@ -24,7 +24,7 @@ describe('Header component', () => {
   });
 
   it('separator renders withour erros', () => {
-    const wrapper = mount(<Header />);
+    const wrapper = mount(<HeaderComponent />);
     const header = wrapper.find('header');
     const hr = header.childAt(2);
     expect(hr.exists()).toBe(true);

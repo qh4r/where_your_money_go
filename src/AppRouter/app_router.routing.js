@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Router, Route } from 'react-router';
-import { Main } from '../Main/main.component';
+import { Main } from '../Main';
 
 const AppRouter = ({ history }) => (
   <Router history={history}>
