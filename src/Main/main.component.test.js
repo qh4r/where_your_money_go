@@ -5,6 +5,7 @@ import { Main } from './main.component';
 import { SearchBar } from '../SearchBar';
 import { Header } from '../Header';
 import { PaymentsGrid } from '../PaymentsGrid';
+import { Pagination } from '../Pagination';
 
 describe('Main component', () => {
   it('should renders without errors', () => {
@@ -37,5 +38,13 @@ describe('Main component', () => {
     const paymentsGrid = appBody.childAt(2);
     expect(paymentsGrid.exists()).toBe(true);
     expect(paymentsGrid.type()).toBe(PaymentsGrid);
+  });
+
+  it('should render pagination', () => {
+    const main = mount(<Main />);
+    const appBody = main.find('.app-body');
+    const pagination = appBody.childAt(3);
+    expect(pagination.exists()).toBe(true);
+    expect(pagination.type()).toBe(Pagination);
   });
 });
