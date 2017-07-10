@@ -13,7 +13,7 @@ $border-color: rgb(204, 207, 209)
 .payments-grid-table
   width: 940px
   font:
-    size: 14px
+    size: 12px
     weight: bold
   border:
     radius: 4px
@@ -22,13 +22,14 @@ $border-color: rgb(204, 207, 209)
     style: solid
     collapse: collapse
   border-collapse: separate !important
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.08),inset 0px 1px 1px 0px rgba(255, 255, 255, 0.004)
   border-spacing: 0
   thead
     color: rgb(102, 102, 102)
-    background-color: rgb(235, 235, 235)
+    background: linear-gradient(to bottom, rgb(236, 237, 238) 0%, rgb(232, 234, 234) 100%)
     font-family: "Helvetica Neue", Helvetica, sans-serif
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6)
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.004)
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.05),inset 0px 1px 1px 0px rgba(255, 255, 255, 0.004)
   th, td
     box-sizing: border-box
     height: 60px
@@ -55,4 +56,7 @@ $border-color: rgb(204, 207, 209)
       td
         border-bottom: none
     &:nth-child(even)
-      background-color: rgb(247, 247, 247)
+      background: linear-gradient(to bottom, rgb(248, 248, 248) 0%, rgb(246, 246, 246) 100%)
+  tbody
+    tr
+      background: rgb(253, 253, 253)
