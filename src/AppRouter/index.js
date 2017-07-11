@@ -1,3 +1,3 @@
-export { routeReducer } from './app_router.reducers';
+export { routeReducer } from './app_router.reducer';
 export { AppRouter } from './app_router.routing';
-export { locationStateSelector } from './app_router.selectors';
+export { locationStateSelector, queryPicker } from './app_router.selectors';

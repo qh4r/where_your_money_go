@@ -7,9 +7,7 @@ const routeInitialState = fromJS({
 export function routeReducer(state = routeInitialState, action) {
   switch (action.type) {
     case LOCATION_CHANGE:
-      return state.merge({
-        locationBeforeTransitions: action.payload,
-      });
+      return state.set('locationBeforeTransitions', action.payload);
     default:
       return state;
   }

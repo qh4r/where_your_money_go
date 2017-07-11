@@ -1,6 +1,7 @@
-import { createSelector } from 'reselect';
+import { parse } from 'query-string';
 
-const locationPicker = () => (state, props) => props.location;
+const queryPicker = () => state =>
+  parse(state.get('route').toJS().locationBeforeTransitions.search);
 
 const locationStateSelector = () => {
   let prevState;
@@ -18,13 +19,8 @@ const locationStateSelector = () => {
   };
 };
 
-const locationSelector = () => createSelector(
-  locationPicker(),
-  location => location,
-);
-
 export {
-  locationSelector,
+  queryPicker,
   locationStateSelector,
 };
 
