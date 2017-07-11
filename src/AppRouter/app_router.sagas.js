@@ -1,26 +1,34 @@
-import { takeLatest, select, put } from 'redux-saga/effects';
-import { LOCATION_CHANGE, push } from 'react-router-redux';
-import { PAGE_SELECTION } from '../Pagination';
+import { takeLatest, select, call } from 'redux-saga/effects';
+import { stringify } from 'query-string';
+import { LOCATION_CHANGE } from 'react-router-redux';
+import { querySelector } from './app_router.selectors';
 
-export function* processLocationChanged(locationData) {
-  console.log('got: ', locationData);
-  const state = yield select();
-  console.log('state: ', state.toJS());
+export function fetchPage(query) {
+  return fetch(`http://test-api.kuria.tshdev.io/?${query}`,
+    {
+      method: 'GET',
+    });
 }
 
-export function* processPageSelection({ activePage }) {
-  yield put(push(`/?p=${activePage}`));
+export const unwrapPromise = x => Promise.resolve(x);
+
+export function* processLocationChanged(locationData) {
+  try {
+    console.log('got: ', locationData);
+    const query = yield select(querySelector());
+    const queryString = stringify(query);
+    const callResult = yield call(fetchPage, queryString);
+    const pageData = yield call(unwrapPromise, callResult.json());
+    console.log('data', pageData);
+  } catch (e) {
+    console.error('ERROR: let\'s just hole this won\'t happen', e);
+  }
 }
 
 function* locationChangedSaga() {
   yield takeLatest(LOCATION_CHANGE, processLocationChanged);
 }
 
-function* pageSelectionSaga() {
-  yield takeLatest(PAGE_SELECTION, processPageSelection);
-}
-
 export default [
   locationChangedSaga,
-  pageSelectionSaga,
 ];

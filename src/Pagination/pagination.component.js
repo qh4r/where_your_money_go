@@ -40,7 +40,6 @@ const parsePages = selectPage =>
 
 const PaginationComponent = ({ availablePages, activePage, selectPage }) => {
   const selectedPage = activePage < availablePages ? activePage : availablePages - 1;
-  console.log(selectedPage);
   const pages = parsePages(selectPage)(availablePages, selectedPage);
   const leftArrowVisible = selectedPage > 0;
   const rightArrowVisible = selectedPage < (availablePages - 1);

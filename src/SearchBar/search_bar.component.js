@@ -21,7 +21,12 @@ class SearchBarComponent extends Component {
   };
 
   onSubmit = (e) => {
-    e.preventDefault();
+    if (e.preventDefault) {
+      e.preventDefault();
+    } else {
+      e.returnValue = false;
+    }
+
     this.props.onSubmit({
       supplier: this.supplierInput.value,
       rating: +this.rateSelect.value,

@@ -44,6 +44,8 @@ describe('Pagination: ', () => {
     expect(pagination.find('.left-arrow').exists()).toBe(true);
     pagination.setProps({ activePage: 0 });
     expect(pagination.find('.left-arrow').exists()).toBe(false);
+    pagination.setProps({ activePage: 1 });
+    expect(pagination.find('.left-arrow').exists()).toBe(true);
     pagination.setProps({ activePage: 2 });
     expect(pagination.find('.left-arrow').exists()).toBe(true);
   });
@@ -61,6 +63,23 @@ describe('Pagination: ', () => {
     expect(pagination.find('.right-arrow').exists()).toBe(true);
     pagination.setProps({ activePage: 0 });
     expect(pagination.find('.right-arrow').exists()).toBe(true);
+    pagination.setProps({ activePage: 1 });
+    expect(pagination.find('.right-arrow').exists()).toBe(true);
+  });
+
+  it('should not render arrows when availablePages are 1 or 0', () => {
+    const pagination = mount(
+      <PaginationComponent
+        selectPage={() => {
+        }}
+        availablePages={1}
+        activePage={0}
+      />);
+    expect(pagination.find('.left-arrow').exists()).toBe(false);
+    expect(pagination.find('.right-arrow').exists()).toBe(false);
+    pagination.setProps({ availablePages: 0 });
+    expect(pagination.find('.left-arrow').exists()).toBe(false);
+    expect(pagination.find('.right-arrow').exists()).toBe(false);
   });
 
   it('should increase number of pages on right arrow callback', () => {

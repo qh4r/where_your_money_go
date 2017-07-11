@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
-import { takeLatest, select, put } from 'redux-saga/effects';
-import { LOCATION_CHANGE, push } from 'react-router-redux';
-import sagas, { processLocationChanged, processPageSelection } from './app_router.sagas';
-import { selectPage } from '../Pagination/pagination.actions';
-import { PAGE_SELECTION } from '../Pagination';
+import { takeLatest, select, call } from 'redux-saga/effects';
+import { LOCATION_CHANGE } from 'react-router-redux';
+import sagas, { fetchPage, processLocationChanged, unwrapPromise } from './app_router.sagas';
+import { querySelector } from './app_router.selectors';
 
-const [locationChangedSaga, pageSelectionSaga] = sagas;
+
+const [locationChangedSaga] = sagas;
 
 describe('AppRouter sagas: ', () => {
   describe('location change saga: ', () => {
@@ -16,24 +16,19 @@ describe('AppRouter sagas: ', () => {
   });
 
   describe('processLocationChange: ', () => {
-    it('should ask for current location', () => {
+    it('should cause effects in right order', () => {
       const saga = processLocationChanged();
-      expect(saga.next().value).toEqual(select());
-    });
-  });
-
-  describe('pageSelectionSaga: ', () => {
-    it('should listen for PAGE_SELECTION actions', () => {
-      const saga = pageSelectionSaga();
-      const result = saga.next(selectPage(3));
-      expect(result.value).toEqual(takeLatest(PAGE_SELECTION, processPageSelection));
-    });
-  });
-
-  describe('processPageSelection: ', () => {
-    it('should trigger location update with passed page param', () => {
-      const saga = processPageSelection({ activePage: 3 });
-      expect(saga.next().value).toEqual(put(push(`/?p=${3}`)));
+      expect(saga.next().value).toEqual(select(querySelector()));
+      expect(saga.next({ page: 3 }).value)
+        .toEqual(call(fetchPage, 'page=3'));
+      const callResult = {
+        json() {
+          return { secret: 'shhhh' };
+        },
+      };
+      expect(saga.next(callResult).value)
+        .toEqual(call(unwrapPromise, callResult.json()));
+      expect(saga.next({ secret: 'shhhh' }).value.secret).toEqual('shhhh');
     });
   });
 });

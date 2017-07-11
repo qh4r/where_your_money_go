@@ -1,7 +1,7 @@
-import { parse } from 'query-string';
+import { createSelector } from 'reselect';
 
 const queryPicker = () => state =>
-  parse(state.get('route').toJS().locationBeforeTransitions.search);
+  state.get('route').toJS().locationBeforeTransitions.query;
 
 const locationStateSelector = () => {
   let prevState;
@@ -19,8 +19,18 @@ const locationStateSelector = () => {
   };
 };
 
+// this makes it possible to test sagas
+// since jest tests check for reference too.
+const querySelectorInstance = createSelector(
+  queryPicker(),
+  query => query,
+);
+
+const querySelector = () => querySelectorInstance;
+
 export {
   queryPicker,
+  querySelector,
   locationStateSelector,
 };
 

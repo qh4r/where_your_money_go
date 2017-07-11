@@ -7,6 +7,9 @@ import { browserHistory } from 'react-router';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { rootReducer } from './rootReducer';
 import appRouterSagas from './AppRouter/app_router.sagas';
+import paginationSagas from './Pagination/pagination.sagas';
+import searchBarSagas from './SearchBar/search_bar.sagas';
+
 const sagas = createSagaMiddleware();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -22,6 +25,8 @@ const store = createStore(
 function* startAllSagas() {
   yield all([...[
     ...appRouterSagas,
+    ...paginationSagas,
+    ...searchBarSagas,
   ].map(saga => saga()),
   ]);
 }
