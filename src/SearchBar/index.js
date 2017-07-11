@@ -1,1 +1,1 @@
-export { SearchBarComponent as SearchBar } from './search_bar.component';
+export { SearchBar } from './search_bar.container';

@@ -196,6 +196,7 @@ module.exports = {
               ident: 'postcss',
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
+                require('postcss-filter-gradient'),
                 autoprefixer({
                   browsers: [
                     '>0.01%',

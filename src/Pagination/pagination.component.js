@@ -25,12 +25,12 @@ Page.defaultProps = {
 };
 
 const parsePages = selectPage =>
-  function parseNext(max, activePage, pages = [], current = 0) {
+  function parseNext(max, selectedPage, pages = [], current = 0) {
     return ((Math.abs(current) < max)
-      ? parseNext(max, activePage, [...pages,
+      ? parseNext(max, selectedPage, [...pages,
         <Page
-          key={current + activePage}
-          active={activePage === current}
+          key={current}
+          active={selectedPage === current}
           pageNumber={current}
           selectPage={selectPage}
         />,
@@ -39,15 +39,17 @@ const parsePages = selectPage =>
   };
 
 const PaginationComponent = ({ availablePages, activePage, selectPage }) => {
-  const pages = parsePages(selectPage)(availablePages, activePage);
-  const leftArrowVisible = activePage > 0;
-  const rightArrowVisible = activePage < (availablePages - 1);
+  const selectedPage = activePage < availablePages ? activePage : availablePages - 1;
+  console.log(selectedPage);
+  const pages = parsePages(selectPage)(availablePages, selectedPage);
+  const leftArrowVisible = selectedPage > 0;
+  const rightArrowVisible = selectedPage < (availablePages - 1);
   return (
     <div className="pagination-container">
       {leftArrowVisible &&
       <span
         className="left-arrow"
-        onClick={() => selectPage(activePage - 1)}
+        onClick={() => selectPage(selectedPage - 1)}
       >
         <FontAwesome
           tag="i"
@@ -58,7 +60,7 @@ const PaginationComponent = ({ availablePages, activePage, selectPage }) => {
       {rightArrowVisible &&
       <span
         className="right-arrow"
-        onClick={() => selectPage(activePage + 1)}
+        onClick={() => selectPage(selectedPage + 1)}
       >
         <FontAwesome
           tag="i"

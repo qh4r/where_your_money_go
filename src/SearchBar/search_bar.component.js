@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './search_bar.component.sass';
 
 class SearchBarComponent extends Component {
@@ -11,13 +12,42 @@ class SearchBarComponent extends Component {
 
   }
 
+  // this method was made for sake of testability
+  // otherwise would be fine with default reset
+  onReset = (e) => {
+    e.preventDefault();
+    this.supplierInput.value = '';
+    this.rateSelect.value = 0;
+  };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.onSubmit({
+      supplier: this.supplierInput.value,
+      rating: +this.rateSelect.value,
+    });
+  };
+
   render() {
     return (
-      <form>
+      <form onSubmit={this.onSubmit} onReset={this.onReset}>
         <div className="search-bar">
-          <input placeholder="Search suppliers" type="text" />
+          <input
+            ref={(supplierInput) => {
+              this.supplierInput = supplierInput;
+            }}
+            placeholder="Search suppliers"
+            type="text"
+          />
           <div className="select-wrapper">
-            <select defaultValue={null} name="rating-picker" id="rating-picker">
+            <select
+              ref={(rateSelect) => {
+                this.rateSelect = rateSelect;
+              }}
+              defaultValue={null}
+              name="rating-picker"
+              id="rating-picker"
+            >
               <option value={0}>Select pound rating</option>
               <option value={1}>1</option>
               <option value={2}>2</option>
@@ -33,6 +63,10 @@ class SearchBarComponent extends Component {
     );
   }
 }
+
+SearchBarComponent.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export {
   SearchBarComponent,

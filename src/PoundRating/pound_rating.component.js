@@ -17,7 +17,7 @@ Rating.propTypes = {
 
 const PoundRatingComponent = ({ rating }) => {
   const ratingsArray = STUB_ARRAY
-    .map((x, i) => <Rating key={i} isActive={i < rating} />);
+    .map((_, i) => <Rating key={i} isActive={i < rating} />);
 
   return (
     <div className="pound-rating-container">

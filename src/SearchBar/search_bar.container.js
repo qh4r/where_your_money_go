@@ -1,12 +1,24 @@
 import React from 'react';
-import { connect } from 'redux';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { SearchBarComponent } from './search_bar.component';
+import * as actions from './search_bar.actions';
 
-const SearchBarContainer = () => (
-  <SearchBarComponent />
+const SearchBarContainer = ({ submitSearchForm }) => (
+  <SearchBarComponent
+    onSubmit={({ supplier, rating }) => submitSearchForm({
+      supplier,
+      rating,
+    })}
+  />
 );
 
-const SearchBar = connect()(SearchBarContainer);
+SearchBarContainer.propTypes = {
+  submitSearchForm: PropTypes.func.isRequired,
+};
+
+const SearchBar = connect(null, actions)(SearchBarContainer);
+
 
 export {
   SearchBar,

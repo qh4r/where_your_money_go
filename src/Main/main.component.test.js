@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef,no-unused-vars */
 import React from 'react';
 import { mount } from 'enzyme';
 import { applyMiddleware, createStore } from 'redux';
@@ -23,6 +23,7 @@ const store = createStore(
 const history = syncHistoryWithStore(memoryHistory, store, {
   selectLocationState: locationStateSelector(),
 });
+
 describe('Main component', () => {
   it('should renders without errors', () => {
     const wrapper = mount(
