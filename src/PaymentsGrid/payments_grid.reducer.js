@@ -1,18 +1,12 @@
 import { fromJS } from 'immutable';
 import { DATA_FETCH_SUCCESS, DATA_FETCH_FAILURE } from '../AppRouter/app_router.constants';
 
-const defaultState = fromJS({
-  left: false,
-  leftEnd: false,
-  links: [],
-  right: false,
-  rightEnd: false,
-});
+const defaultState = fromJS([]);
 
-const paginationReducer = (state = defaultState, action) => {
+const paymentsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case DATA_FETCH_SUCCESS:
-      return state.merge(action.pagination);
+      return fromJS(action.payments);
     case DATA_FETCH_FAILURE:
       return defaultState;
     default:
@@ -21,5 +15,5 @@ const paginationReducer = (state = defaultState, action) => {
 };
 
 export {
-  paginationReducer,
+  paymentsReducer,
 };

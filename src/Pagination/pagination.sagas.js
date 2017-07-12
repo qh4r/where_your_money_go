@@ -6,7 +6,6 @@ import { querySelector } from '../AppRouter';
 
 export function* processPageSelection({ activePage }) {
   const query = yield select(querySelector());
-  console.log(query);
   const queryString = stringify({
     ...query,
     page: activePage,

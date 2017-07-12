@@ -1,7 +1,8 @@
-import { takeLatest, select, call } from 'redux-saga/effects';
+import { takeLatest, select, call, put } from 'redux-saga/effects';
 import { stringify } from 'query-string';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import { querySelector } from './app_router.selectors';
+import { dataFetchSuccess, dataFetchFailure } from './app_router.actions';
 
 export function fetchPage(query) {
   return fetch(`http://test-api.kuria.tshdev.io/?${query}`,
@@ -12,16 +13,15 @@ export function fetchPage(query) {
 
 export const unwrapPromise = x => Promise.resolve(x);
 
-export function* processLocationChanged(locationData) {
+export function* processLocationChanged() {
   try {
-    console.log('got: ', locationData);
     const query = yield select(querySelector());
     const queryString = stringify(query);
     const callResult = yield call(fetchPage, queryString);
     const pageData = yield call(unwrapPromise, callResult.json());
-    console.log('data', pageData);
+    yield put(dataFetchSuccess(pageData));
   } catch (e) {
-    console.error('ERROR: let\'s just hole this won\'t happen', e);
+    yield put(dataFetchFailure());
   }
 }
 

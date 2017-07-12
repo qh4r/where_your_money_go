@@ -1,1 +1,2 @@
-export { PaymentsGridComponent as PaymentsGrid } from './payments_grid.component';
+export { paymentsReducer } from './payments_grid.reducer';
+export { PaymentsGrid } from './payments_grid.container';

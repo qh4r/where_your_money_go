@@ -14,17 +14,21 @@
       text-shadow: 0 1px 0 rgba(0, 0, 0, 0.13)
       border-color: white
       background: linear-gradient(to bottom, rgb(80, 80, 80) 0%, rgb(92, 92, 92) 100%)
-  .left-arrow, .right-arrow
+  .arrow
     font-size: 12px
     margin-top: -1px
     i
       font-weight: bolder
-  .page-number, .left-arrow, .right-arrow
+    &.hidden
+      opacity: 0
+      cursor: auto
+  .page-number, .arrow
     box-sizing: border-box
     height: 24px
     width: 24px
     cursor: pointer
     display: inline-block
+    padding: 0
     margin-right: 5px
     line-height: 24px
     font-style: normal

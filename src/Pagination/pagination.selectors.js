@@ -6,8 +6,15 @@ const paginationStatePicker = () => state => state.get('pagination').toJS();
 const paginationSelector = () => createSelector(
   paginationStatePicker(),
   queryPicker(),
-  ({ availablePages }, { page }) =>
-    ({ availablePages, activePage: +(page || 0) }),
+  ({ left, right, leftEnd, rightEnd, links }, { page }) =>
+    ({
+      left,
+      right,
+      leftEnd,
+      rightEnd,
+      pageNumbers: Object.keys(links).map(key => +key),
+      activePage: +(page || 0),
+    }),
 );
 
 export {

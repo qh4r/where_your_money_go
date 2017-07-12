@@ -1,8 +1,33 @@
+/* eslint-disable camelcase */
 import React from 'react';
+import PropTypes from 'prop-types';
 import './payments_grid.component.sass';
 import { PoundRating } from '../PoundRating/index';
 
-const PaymentsGridComponent = () => (
+const PaymentRow = ({
+                      payment_amount,
+                      payment_cost_rating,
+                      payment_ref,
+                      payment_supplier,
+                    }) => (
+                      <tr>
+                        <td>{payment_supplier}</td>
+                        <td>
+                          <PoundRating rating={+payment_cost_rating} />
+                        </td>
+                        <td>{payment_ref}</td>
+                        <td>{payment_amount}</td>
+                      </tr>
+);
+
+PaymentRow.propTypes = {
+  payment_amount: PropTypes.string.isRequired,
+  payment_cost_rating: PropTypes.string.isRequired,
+  payment_ref: PropTypes.string.isRequired,
+  payment_supplier: PropTypes.string.isRequired,
+};
+
+const PaymentsGridComponent = ({ payments }) => (
   <table className="payments-grid-table">
     <thead>
       <tr>
@@ -13,34 +38,25 @@ const PaymentsGridComponent = () => (
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Test</td>
-        <td>
-          <PoundRating rating={1} />
-        </td>
-        <td>Test</td>
-        <td>Test</td>
-      </tr>
-      <tr>
-        <td>Test</td>
-        <td>
-          <PoundRating rating={3} />
-        </td>
-        <td>Test</td>
-        <td>Test</td>
-      </tr>
-      <tr>
-        <td>Test</td>
-        <td>
-          <PoundRating rating={5} />
-        </td>
-        <td>Test</td>
-        <td>Test</td>
-      </tr>
+      {payments.map(payment => (
+        <PaymentRow
+          key={payment.payment_ref}
+          {...payment}
+        />))}
     </tbody>
   </table>
 );
 
+PaymentsGridComponent.propTypes = {
+  payments: PropTypes.arrayOf(PropTypes.shape({
+    payment_amount: PropTypes.string.isRequired,
+    payment_cost_rating: PropTypes.string.isRequired,
+    payment_ref: PropTypes.string.isRequired,
+    payment_supplier: PropTypes.string.isRequired,
+  })).isRequired,
+};
+
 export {
   PaymentsGridComponent,
+  PaymentRow,
 };
