@@ -4,12 +4,9 @@ import './search_bar.component.sass';
 
 class SearchBarComponent extends Component {
 
-  componentWillMount() {
-
-  }
-
-  componentWillReceiveProps() {
-
+  componentDidMount() {
+    this.supplierInput.value = this.props.query;
+    this.rateSelect.value = this.props.rating;
   }
 
   // this method was made for sake of testability
@@ -71,6 +68,8 @@ class SearchBarComponent extends Component {
 
 SearchBarComponent.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
 };
 
 export {

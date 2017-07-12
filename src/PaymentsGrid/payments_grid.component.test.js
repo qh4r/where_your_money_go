@@ -60,6 +60,6 @@ describe('PaymentRow component', () => {
     expect(tr.childAt(1).childAt(0).prop('rating'))
       .toBe(+payment.payment_cost_rating);
     expect(tr.childAt(2).text()).toBe(payment.payment_ref);
-    expect(tr.childAt(3).text()).toBe(payment.payment_amount);
+    expect(tr.childAt(3).text()).toBe(`£${payment.payment_amount}`);
   });
 });

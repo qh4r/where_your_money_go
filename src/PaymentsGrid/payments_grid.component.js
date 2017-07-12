@@ -16,7 +16,7 @@ const PaymentRow = ({
                           <PoundRating rating={+payment_cost_rating} />
                         </td>
                         <td>{payment_ref}</td>
-                        <td>{payment_amount}</td>
+                        <td>£{payment_amount}</td>
                       </tr>
 );
 

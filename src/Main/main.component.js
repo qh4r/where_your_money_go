@@ -11,7 +11,7 @@ const Main = () => (
       <Header />
       <SearchBar />
       <PaymentsGrid />
-      <Pagination availablePages={3} activePage={1} />
+      <Pagination />
     </div>
   </div>
 );

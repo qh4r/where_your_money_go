@@ -7,6 +7,8 @@ describe('SearchBar component', () => {
   it('search input without errors', () => {
     const form = mount(
       <SearchBarComponent
+        query=""
+        rating={0}
         onSubmit={() => {
         }}
       />);
@@ -19,6 +21,8 @@ describe('SearchBar component', () => {
   it('select renders without errors', () => {
     const form = mount(
       <SearchBarComponent
+        query=""
+        rating={0}
         onSubmit={() => {
         }}
       />);
@@ -33,6 +37,8 @@ describe('SearchBar component', () => {
   it('reset button renders without errors', () => {
     const form = mount(
       <SearchBarComponent
+        query=""
+        rating={0}
         onSubmit={() => {
         }}
       />);
@@ -44,6 +50,8 @@ describe('SearchBar component', () => {
   it('submit button renders without errors', () => {
     const form = mount(
       <SearchBarComponent
+        query=""
+        rating={0}
         onSubmit={() => {
         }}
       />);
@@ -54,7 +62,12 @@ describe('SearchBar component', () => {
 
   it('should post se values on submit press', () => {
     const onSubmit = jest.fn();
-    const form = mount(<SearchBarComponent onSubmit={onSubmit} />);
+    const form = mount(
+      <SearchBarComponent
+        query=""
+        rating={0}
+        onSubmit={onSubmit}
+      />);
     const input = form.find('input[type="text"]');
     const select = form.find('select');
     input.get(0).value = 'test';
@@ -68,7 +81,12 @@ describe('SearchBar component', () => {
 
   it('should clear values on reset press', () => {
     const onSubmit = jest.fn();
-    const form = mount(<SearchBarComponent onSubmit={onSubmit} />);
+    const form = mount(
+      <SearchBarComponent
+        onSubmit={onSubmit}
+        query="123"
+        rating={2}
+      />);
     const input = form.find('input[type="text"]');
     const select = form.find('select');
     input.get(0).value = 'test';
@@ -79,5 +97,19 @@ describe('SearchBar component', () => {
       supplier: '',
       rating: 0,
     });
+  });
+
+  it('should render with initial values passed', () => {
+    const onSubmit = jest.fn();
+    const form = mount(
+      <SearchBarComponent
+        onSubmit={onSubmit}
+        query="test"
+        rating={5}
+      />);
+    const input = form.find('input[type="text"]');
+    const select = form.find('select');
+    expect(input.get(0).value).toBe('test');
+    expect(select.get(0).value).toBe((5).toString());
   });
 });

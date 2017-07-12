@@ -88,7 +88,7 @@ module.exports = {
     // for React Native Web.
     extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
-      
+
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -118,7 +118,7 @@ module.exports = {
           {
             options: {
               formatter: eslintFormatter,
-              
+
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -143,6 +143,8 @@ module.exports = {
           /\.gif$/,
           /\.jpe?g$/,
           /\.png$/,
+          /\.sass$/,
+          /\.scss$/,
         ],
         loader: require.resolve('file-loader'),
         options: {
@@ -165,7 +167,6 @@ module.exports = {
         include: paths.appSrc,
         loader: require.resolve('babel-loader'),
         options: {
-          
           compact: true,
         },
       },
@@ -182,7 +183,7 @@ module.exports = {
       // use the "style" loader inside the async code so CSS from them won't be
       // in the main CSS file.
       {
-        test: /\.css$/,
+        test: /\.(sass|scss)$/,
         loader: ExtractTextPlugin.extract(
           Object.assign(
             {
@@ -204,10 +205,11 @@ module.exports = {
                     ident: 'postcss',
                     plugins: () => [
                       require('postcss-flexbugs-fixes'),
+                      require('postcss-filter-gradient'),
                       autoprefixer({
                         browsers: [
-                          '>1%',
-                          'last 4 versions',
+                          '>0.01%',
+                          'last 20 versions',
                           'Firefox ESR',
                           'not ie < 9', // React doesn't support IE8 anyway
                         ],
@@ -216,6 +218,7 @@ module.exports = {
                     ],
                   },
                 },
+                require.resolve('sass-loader'),
               ],
             },
             extractTextPluginOptions
