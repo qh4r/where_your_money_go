@@ -2,7 +2,7 @@
 import { takeLatest, select, call, put } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import sagas, { fetchPage, processLocationChanged, unwrapPromise } from './app_router.sagas';
-import { querySelector } from './app_router.selectors';
+import { queryAndPreviousSearchSelector } from './app_router.selectors';
 import { dataFetchSuccess, dataFetchFailure } from './app_router.actions';
 
 
@@ -19,8 +19,8 @@ describe('AppRouter sagas: ', () => {
   describe('processLocationChange: ', () => {
     it('should cause effects in right order', () => {
       const saga = processLocationChanged();
-      expect(saga.next().value).toEqual(select(querySelector()));
-      expect(saga.next({ page: 3 }).value)
+      expect(saga.next().value).toEqual(select(queryAndPreviousSearchSelector()));
+      expect(saga.next({ query: { page: 3 }, search: '' }).value)
         .toEqual(call(fetchPage, 'page=3'));
       const callResult = {
         json() {
@@ -35,11 +35,18 @@ describe('AppRouter sagas: ', () => {
 
     it('should throw on api call fail', () => {
       const saga = processLocationChanged();
-      expect(saga.next().value).toEqual(select(querySelector()));
-      expect(saga.next({ page: 3 }).value)
+      expect(saga.next().value).toEqual(select(queryAndPreviousSearchSelector()));
+      expect(saga.next({ query: { page: 3 }, search: '' }).value)
         .toEqual(call(fetchPage, 'page=3'));
       expect(saga.throw(new Error('shell not pass')).value)
         .toEqual(put(dataFetchFailure()));
+    });
+
+    it('should end if current query matches requested', () => {
+      const saga = processLocationChanged();
+      expect(saga.next().value).toEqual(select(queryAndPreviousSearchSelector()));
+      expect(saga.next({ query: { page: 3 }, search: '?page=3' }).done)
+        .toEqual(true);
     });
   });
 });

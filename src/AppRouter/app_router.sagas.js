@@ -1,7 +1,7 @@
 import { takeLatest, select, call, put } from 'redux-saga/effects';
 import { stringify } from 'query-string';
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { querySelector } from './app_router.selectors';
+import { queryAndPreviousSearchSelector } from './app_router.selectors';
 import { dataFetchSuccess, dataFetchFailure } from './app_router.actions';
 
 export function fetchPage(query) {
@@ -15,11 +15,13 @@ export const unwrapPromise = x => Promise.resolve(x);
 
 export function* processLocationChanged() {
   try {
-    const query = yield select(querySelector());
+    const { query, search } = yield select(queryAndPreviousSearchSelector());
     const queryString = stringify(query);
-    const callResult = yield call(fetchPage, queryString);
-    const pageData = yield call(unwrapPromise, callResult.json());
-    yield put(dataFetchSuccess(pageData));
+    if (!search || (search.toLowerCase() !== `?${queryString.toLowerCase()}`)) {
+      const callResult = yield call(fetchPage, queryString);
+      const pageData = yield call(unwrapPromise, callResult.json());
+      yield put(dataFetchSuccess(pageData));
+    }
   } catch (e) {
     yield put(dataFetchFailure());
   }

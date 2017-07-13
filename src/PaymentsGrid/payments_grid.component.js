@@ -9,8 +9,9 @@ const PaymentRow = ({
                       payment_cost_rating,
                       payment_ref,
                       payment_supplier,
+                      onClick,
                     }) => (
-                      <tr>
+                      <tr onClick={onClick}>
                         <td>{payment_supplier}</td>
                         <td>
                           <PoundRating rating={+payment_cost_rating} />
@@ -25,9 +26,10 @@ PaymentRow.propTypes = {
   payment_cost_rating: PropTypes.string.isRequired,
   payment_ref: PropTypes.string.isRequired,
   payment_supplier: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
-const PaymentsGridComponent = ({ payments }) => (
+const PaymentsGridComponent = ({ payments, showPopup }) => (
   <table className="payments-grid-table">
     <thead>
       <tr>
@@ -38,9 +40,10 @@ const PaymentsGridComponent = ({ payments }) => (
       </tr>
     </thead>
     <tbody>
-      {payments.map(payment => (
+      {payments.map((payment, i) => (
         <PaymentRow
           key={payment.payment_ref}
+          onClick={() => showPopup(i)}
           {...payment}
         />))}
     </tbody>
@@ -54,6 +57,7 @@ PaymentsGridComponent.propTypes = {
     payment_ref: PropTypes.string.isRequired,
     payment_supplier: PropTypes.string.isRequired,
   })).isRequired,
+  showPopup: PropTypes.func.isRequired,
 };
 
 export {

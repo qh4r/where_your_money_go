@@ -3,6 +3,12 @@ import { createSelector } from 'reselect';
 const queryPicker = () => state =>
   state.get('route').toJS().locationBeforeTransitions.query;
 
+const searchPicker = () => state =>
+  state.get('route').toJS().locationBeforeTransitions.search;
+
+const previousRoutePicker = () => state =>
+  state.get('route').toJS().previousLocation;
+
 const locationStateSelector = () => {
   let prevState;
   let prevStateJS;
@@ -28,9 +34,26 @@ const querySelectorInstance = createSelector(
 
 const querySelector = () => querySelectorInstance;
 
+const searchSelectorInstance = createSelector(
+  searchPicker(),
+  search => search,
+);
+
+const searchSelector = () => searchSelectorInstance;
+
+const queryAndPreviousSearchSelectorInstance = createSelector(
+  previousRoutePicker(),
+  queryPicker(),
+  (oldRoute, query) => ({ search: oldRoute ? oldRoute.search : '', query }),
+);
+
+const queryAndPreviousSearchSelector = () => queryAndPreviousSearchSelectorInstance;
+
 export {
   queryPicker,
   querySelector,
+  searchSelector,
   locationStateSelector,
+  queryAndPreviousSearchSelector,
 };
 

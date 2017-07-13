@@ -9,4 +9,5 @@ const paymentsSelector = () => createSelector(
 
 export {
   paymentsSelector,
+  paymentsStatePicker,
 };

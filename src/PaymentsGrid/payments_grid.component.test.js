@@ -24,13 +24,23 @@ const examplePayments = [{
 
 describe('PaymentsGrid component', () => {
   it(' renders without errors', () => {
-    const wrapper = mount(<PaymentsGridComponent payments={examplePayments} />);
+    const wrapper = mount(
+      <PaymentsGridComponent
+        showPopup={() => {
+        }}
+        payments={examplePayments}
+      />);
     const table = wrapper.find('table');
     expect(table.exists()).toBe(true);
   });
 
   it('always renders header', () => {
-    const wrapper = mount(<PaymentsGridComponent payments={[]} />);
+    const wrapper = mount(
+      <PaymentsGridComponent
+        payments={[]}
+        showPopup={() => {
+        }}
+      />);
     const table = wrapper.find('table');
     const thead = table.childAt(0);
     expect(thead.type()).toBe('thead');
@@ -40,10 +50,27 @@ describe('PaymentsGrid component', () => {
   });
 
   it('should render proper amount of payments', () => {
-    const wrapper = mount(<PaymentsGridComponent payments={examplePayments} />);
+    const wrapper = mount(
+      <PaymentsGridComponent
+        payments={examplePayments}
+        showPopup={() => {
+        }}
+      />);
     expect(wrapper.find('tbody tr').length).toBe(3);
     wrapper.setProps({ payments: [] });
     expect(wrapper.find('tbody tr').length).toBe(0);
+  });
+
+  it('should render proper amount of payments', () => {
+    const callback = jest.fn();
+    const wrapper = mount(
+      <PaymentsGridComponent
+        payments={examplePayments}
+        showPopup={callback}
+      />);
+    const tr = wrapper.find('tbody').childAt(1);
+    tr.simulate('click');
+    expect(callback).toBeCalledWith(1);
   });
 });
 
@@ -52,6 +79,8 @@ describe('PaymentRow component', () => {
     const payment = examplePayments[0];
     const wrapper = mount(
       <PaymentRow
+        onClick={() => {
+        }}
         {...payment}
       />);
     const tr = wrapper.find('tr');
@@ -61,5 +90,18 @@ describe('PaymentRow component', () => {
       .toBe(+payment.payment_cost_rating);
     expect(tr.childAt(2).text()).toBe(payment.payment_ref);
     expect(tr.childAt(3).text()).toBe(`£${payment.payment_amount}`);
+  });
+
+  it('should raise callback on click', () => {
+    const callback = jest.fn();
+    const payment = examplePayments[0];
+    const wrapper = mount(
+      <PaymentRow
+        onClick={callback}
+        {...payment}
+      />);
+    const tr = wrapper.find('tr');
+    tr.simulate('click');
+    expect(callback).toBeCalled();
   });
 });
