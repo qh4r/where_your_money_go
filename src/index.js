@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory } from 'react-router';
+import { browserHistory, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import { supportsHistory } from 'history/DOMUtils';
 import { Provider } from 'react-redux';
 import { locationStateSelector } from './AppRouter';
 import { App } from './app';
 import { store } from './store';
 import registerServiceWorker from './registerServiceWorker';
 
-const history = syncHistoryWithStore(browserHistory, store, {
+const history = syncHistoryWithStore(supportsHistory() ? browserHistory : hashHistory, store, {
   selectLocationState: locationStateSelector(),
 });
 

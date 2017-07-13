@@ -1,3 +1,5 @@
+@import "../styles/media"
+
 @font-face
   font-family: "Source Sans Pro Light"
   src: url("../fonts/SourceSansPro-Light.ttf")
@@ -19,6 +21,9 @@
     text-align: center
     line-height: 0.335
     margin-top: 20px
+    margin-bottom: 30px
+    @include phablet
+      font-size: 30px
 
   .smaller-but-by-no-means-tiny-black-text
     font-size: 17px

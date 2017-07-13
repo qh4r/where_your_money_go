@@ -1,3 +1,5 @@
+@import "../styles/media"
+
 @font-face
   font-family: "Source Sans Pro"
   src: url("../fonts/SourceSansPro-Regular.ttf")
@@ -61,3 +63,7 @@ $border-color: rgb(204, 207, 209)
   tbody
     tr
       background: rgb(253, 253, 253)
+
+  @include tablet
+    max-width: 940px
+    width: 100%
