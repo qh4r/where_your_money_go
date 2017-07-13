@@ -1,3 +1,4 @@
+@import "../styles/media"
 @import "../../node_modules/font-awesome/css/font-awesome.min.css"
 
 @font-face
@@ -8,7 +9,20 @@
   font-family: "Source Sans Pro"
   src: url("../fonts/SourceSansPro-Regular.ttf")
 
+
 .popup-overlay
+  @keyframes squash
+    from
+      transform: translateX(0) rotateZ(0) rotateX(0)
+    to
+      transform: translateX(50%) rotateZ(90deg) rotateX(90deg)
+
+  @keyframes restore
+    from
+      transform: translateX(-50%) rotateZ(-90deg) rotateX(-90deg)
+    to
+      transform: rotateZ(0) translateX(0) rotateX(0)
+
   position: fixed
   left: 0
   right: 0
@@ -17,6 +31,16 @@
   background-color: rgba(255, 255, 255, 0.01)
   z-index: 5
   transition: opacity 1s ease-in-out
+
+  &.gate-enter.gate-enter-active
+    animation: restore 0.5s ease-out forwards
+
+  &.gate-leave
+    opacity: 1.0
+
+  &.gate-leave.gate-leave-active
+    opacity: 0
+    animation: squash 0.5s ease-out forwards
 
   .message-box
     position: absolute
@@ -32,6 +56,9 @@
     border-radius: 8px
     transform: translateX(-50%) translateY(-50%)
     background-color: rgb(255, 255, 255)
+
+    @include phone
+      width: 75%
 
     .close-icon
       position: absolute
@@ -56,6 +83,8 @@
       justify-content: space-around
       .column
         width: 50%
+        @include phone
+          width: 100%
         p
           margin: 5px 0
           &:last-child
@@ -63,27 +92,3 @@
               size: 26px
               family: "Source Sans Pro Light"
             color: rgb(100, 100, 100)
-
-@keyframes squash
-  from
-    transform: translateX(0) rotateZ(0) rotateX(0)
-  to
-    transform: translateX(50%) rotateZ(90deg) rotateX(90deg)
-
-@keyframes restore
-  from
-    transform: translateX(-50%) rotateZ(-90deg) rotateX(-90deg)
-  to
-    transform: rotateZ(0) translateX(0) rotateX(0)
-
-.gate-enter
-
-.gate-enter.gate-enter-active
-  animation: restore 0.5s ease-out forwards
-
-.gate-leave
-  opacity: 1.0
-
-.gate-leave.gate-leave-active
-  opacity: 0
-  animation: squash 0.5s ease-out forwards

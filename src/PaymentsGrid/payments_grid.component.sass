@@ -24,14 +24,14 @@ $border-color: rgb(204, 207, 209)
     style: solid
     collapse: collapse
   border-collapse: separate !important
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.08),inset 0px 1px 1px 0px rgba(255, 255, 255, 0.004)
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.08), inset 0px 1px 1px 0px rgba(255, 255, 255, 0.004)
   border-spacing: 0
   thead
     color: rgb(102, 102, 102)
     background: linear-gradient(to bottom, rgb(236, 237, 238) 0%, rgb(232, 234, 234) 100%)
     font-family: "Helvetica Neue", Helvetica, sans-serif
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6)
-    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.05),inset 0px 1px 1px 0px rgba(255, 255, 255, 0.004)
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.05), inset 0px 1px 1px 0px rgba(255, 255, 255, 0.004)
   th, td
     box-sizing: border-box
     height: 60px
@@ -67,3 +67,51 @@ $border-color: rgb(204, 207, 209)
   @include tablet
     max-width: 940px
     width: 100%
+
+  // solution, by the most part copied from css tricks
+  @include phone
+    table, thead, tbody, th, td, tr
+      display: block
+      vertical-align: center
+
+    thead tr
+      position: absolute
+      top: -9999px
+      left: -9999px
+
+    tr
+      border: 1px solid #ccc
+      td
+        display: flex
+        justify-content: center
+        align-items: center
+
+        &:first-child
+          text-align: center
+          padding-left: 50%
+      &:last-child
+        td
+          @include border-mixin('bottom')
+
+    td
+      border: none
+      border-bottom: 1px solid #eee
+      position: relative
+      padding-left: 50%
+
+    td:before
+      position: absolute
+      top: 15px
+      left: 6px
+      width: 45%
+      padding-right: 10px
+      white-space: nowrap
+
+    td:nth-of-type(1):before
+      content: "Supplier"
+    td:nth-of-type(2):before
+      content: "Pound Rating"
+    td:nth-of-type(3):before
+      content: "Reference"
+    td:nth-of-type(4):before
+      content: "Value"
