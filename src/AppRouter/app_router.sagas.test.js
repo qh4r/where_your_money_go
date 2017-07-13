@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { takeLatest, select, call, put } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
-import sagas, { fetchPage, processLocationChanged, unwrapPromise } from './app_router.sagas';
+import sagas, { fetchPage, processLocationChanged } from './app_router.sagas';
 import { queryAndPreviousSearchSelector } from './app_router.selectors';
 import { dataFetchSuccess, dataFetchFailure } from './app_router.actions';
 
@@ -23,13 +23,12 @@ describe('AppRouter sagas: ', () => {
       expect(saga.next({ query: { page: 3 }, search: '' }).value)
         .toEqual(call(fetchPage, 'page=3'));
       const callResult = {
-        json() {
-          return { pagination: {}, payments: [1, 2, 3] };
+        data: {
+          pagination: {},
+          payments: [1, 2, 3],
         },
       };
       expect(saga.next(callResult).value)
-        .toEqual(call(unwrapPromise, callResult.json()));
-      expect(saga.next({ pagination: {}, payments: [1, 2, 3] }).value)
         .toEqual(put(dataFetchSuccess({ pagination: {}, payments: [1, 2, 3] })));
     });
 

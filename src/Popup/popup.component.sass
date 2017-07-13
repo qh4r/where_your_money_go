@@ -11,17 +11,29 @@
 
 
 .popup-overlay
-  @keyframes squash
+  @keyframes barrel-out
     from
       transform: translateX(0) rotateZ(0) rotateX(0)
     to
       transform: translateX(50%) rotateZ(90deg) rotateX(90deg)
 
-  @keyframes restore
+  @keyframes barrel-in
     from
       transform: translateX(-50%) rotateZ(-90deg) rotateX(-90deg)
     to
       transform: rotateZ(0) translateX(0) rotateX(0)
+
+  @keyframes slide-out
+    from
+      transform: translateY(0)
+    to
+      transform: translateY(-100%)
+
+  @keyframes slide-in
+    from
+      transform: translateY(-100%)
+    to
+      transform: translateY(0)
 
   position: fixed
   left: 0
@@ -33,14 +45,18 @@
   transition: opacity 1s ease-in-out
 
   &.gate-enter.gate-enter-active
-    animation: restore 0.5s ease-out forwards
+    animation: barrel-in 0.5s ease-out forwards
+    @include phone
+      animation: slide-in 0.5s ease-out forwards
 
   &.gate-leave
     opacity: 1.0
 
   &.gate-leave.gate-leave-active
     opacity: 0
-    animation: squash 0.5s ease-out forwards
+    animation: barrel-out 0.5s ease-out forwards
+    @include phone
+      animation: slide-out 0.5s ease-out forwards
 
   .message-box
     position: absolute

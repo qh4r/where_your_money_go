@@ -1,3 +1,5 @@
+@import "../styles/media"
+
 .pound-rating-container
   .pound-rating
     margin-right: 3px
@@ -10,4 +12,5 @@
     background-repeat: no-repeat no-repeat
     &.active
       background-image: url("../graphics/p_rating_active.png")
-      
+    @include phone
+      margin-right: -4px
