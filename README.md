@@ -1,4 +1,4 @@
-Projekt utworzony z użyciem react-boilerplate
+Projekt utworzony z użyciem create-react-app
 
 Wykorzystywane:
 * Node - v7.7.0
