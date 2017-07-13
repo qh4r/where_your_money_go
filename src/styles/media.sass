@@ -1,5 +1,5 @@
 $phone-width: 500px
-$phone-width: 640px
+$phablet-width: 640px
 $tablet-width: 1000px
 
 @mixin tablet
@@ -7,7 +7,7 @@ $tablet-width: 1000px
     @content
 
 @mixin phablet
-  @media (max-width: #{$tablet-width})
+  @media (max-width: #{$phablet-width})
     @content
 
 @mixin phone
